@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora IPv4</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { box-sizing: border-box; }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen py-8">
+  <div class="container mx-auto px-4 max-w-4xl">
+    <div class="bg-white rounded-xl shadow-2xl p-8">
+      <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">🌐 Calculadora IPv4</h1>
+
+      <form id="ipForm" class="space-y-6">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Dirección IP (formato: X.X.X.X)</label>
+            <input type="text" id="ipAddress" placeholder="192.168.1.100"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Máscara de Subred (formato: X.X.X.X)</label>
+            <input type="text" id="subnetMask" placeholder="255.255.255.0"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required>
+          </div>
+        </div>
+
+        <button type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 transform hover:scale-105">
+          Calcular IPv4
+        </button>
+      </form>
+
+      <div id="errorMessage" class="hidden mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg"></div>
+
+      <div id="results" class="hidden mt-8 space-y-6">
+        <h2 class="text-2xl font-bold text-gray-800 border-b-2 border-blue-500 pb-2">📊 Resultados del Cálculo</h2>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-blue-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-blue-800 mb-2">🏠 IP de Red</h3>
+            <p id="networkIP" class="text-lg font-mono"></p>
+          </div>
+
+          <div class="bg-green-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-green-800 mb-2">📡 IP de Broadcast</h3>
+            <p id="broadcastIP" class="text-lg font-mono"></p>
+          </div>
+
+          <div class="bg-purple-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-purple-800 mb-2">💻 Hosts Útiles</h3>
+            <p id="usableHosts" class="text-lg font-mono"></p>
+          </div>
+
+          <div class="bg-yellow-50 p-4 rounded-lg">
+            <h3 class="font-semibold text-yellow-800 mb-2">📍 Clase de IP</h3>
+            <p id="ipClass" class="text-lg font-mono"></p>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <h3 class="font-semibold text-gray-800 mb-2">🔗 Rango de IPs Útiles</h3>
+          <p id="usableRange" class="text-lg font-mono"></p>
+        </div>
+
+        <div class="bg-indigo-50 p-4 rounded-lg">
+          <h3 class="font-semibold text-indigo-800 mb-2">🌍 Tipo de IP</h3>
+          <p id="ipType" class="text-lg"></p>
+        </div>
+
+        <div class="bg-orange-50 p-4 rounded-lg">
+          <h3 class="font-semibold text-orange-800 mb-2">🔢 Representación Binaria</h3>
+          <div class="bg-white p-4 rounded border">
+            <div class="text-xs text-gray-600 mb-2">IP Address en binario:</div>
+            <div class="relative">
+              <div id="binaryRepresentation" class="font-mono text-lg leading-relaxed"></div>
+              <div id="subnetLine" class="absolute top-0 h-full border-l-2 border-blue-500"></div>
+            </div>
+            <div class="flex items-center gap-4 mt-3 text-xs">
+              <div class="flex items-center gap-1">
+                <div class="w-3 h-3 bg-red-500 rounded"></div>
+                <span>Porción de Red</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <div class="w-3 h-3 bg-green-500 rounded"></div>
+                <span>Porción de Host</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <div class="w-3 h-0.5 bg-blue-500"></div>
+                <span>Límite de Subred</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('ipForm').addEventListener('submit', e => {
+      e.preventDefault();
+      calculateIPv4();
+    });
+
+    function calculateIPv4() {
+      const ip = document.getElementById('ipAddress').value.trim();
+      const mask = document.getElementById('subnetMask').value.trim();
+
+      if (!isValidIP(ip) || !isValidIP(mask)) return showError('Ingrese IPs válidas (X.X.X.X)');
+      if (!isValidSubnetMask(mask)) return showError('Máscara de subred inválida');
+
+      hideError();
+
+      const ipOctets = ip.split('.').map(Number);
+      const maskOctets = mask.split('.').map(Number);
+
+      const network = ipOctets.map((v, i) => v & maskOctets[i]);
+      const broadcast = network.map((v, i) => v | (255 - maskOctets[i]));
+
+      const hostBits = maskOctets.reduce((acc, octet) => acc + (8 - countBits(octet)), 0);
+      const usableHosts = Math.max(0, Math.pow(2, hostBits) - 2);
+
+      const firstUsable = [...network];
+      firstUsable[3] += 1;
+      const lastUsable = [...broadcast];
+      lastUsable[3] -= 1;
+
+      const maskBits = maskOctets.reduce((acc, octet) => acc + countBits(octet), 0);
+      const bin = ipOctets.map(o => o.toString(2).padStart(8, '0')).join('');
+      const binaryHTML = createColoredBinary(bin, maskBits);
+
+      document.getElementById('networkIP').textContent = network.join('.');
+      document.getElementById('broadcastIP').textContent = broadcast.join('.');
+      document.getElementById('usableHosts').textContent = usableHosts;
+      document.getElementById('ipClass').textContent = `Clase ${getIPClass(ipOctets[0])}`;
+      document.getElementById('usableRange').textContent = `${firstUsable.join('.')} - ${lastUsable.join('.')}`;
+      document.getElementById('ipType').textContent = isPrivateIP(ipOctets) ? 'IP Privada' : 'IP Pública';
+      document.getElementById('binaryRepresentation').innerHTML = binaryHTML;
+
+      positionSubnetLine(maskBits);
+      document.getElementById('results').classList.remove('hidden');
+    }
+
+    const isValidIP = ip => ip.split('.').length === 4 && ip.split('.').every(p => p >= 0 && p <= 255);
+    const countBits = n => n.toString(2).replace(/0/g, '').length;
+
+    function isValidSubnetMask(mask) {
+      const bits = mask.split('.').map(Number).map(b => b.toString(2).padStart(8, '0')).join('');
+      return /^1*0*$/.test(bits);
+    }
+
+    function getIPClass(first) {
+      if (first <= 126) return 'A';
+      if (first <= 191) return 'B';
+      if (first <= 223) return 'C';
+      if (first <= 239) return 'D';
+      if (first <= 255) return 'E';
+      return 'Desconocida';
+    }
+
+    function isPrivateIP([a, b]) {
+      return a === 10 || (a === 172 && b >= 16 && b <= 31) || (a === 192 && b === 168);
+    }
+
+    function createColoredBinary(bin, maskBits) {
+      return bin.split('').map((bit, i) => {
+        const color = i < maskBits ? 'text-red-600 bg-red-100' : 'text-green-600 bg-green-100';
+        const dot = (i + 1) % 8 === 0 && i < bin.length - 1 ? '<span class="text-gray-400 mx-1">.</span>' : '';
+        return `<span class="${color} px-1 rounded">${bit}</span>${dot}`;
+      }).join('');
+    }
+
+    function positionSubnetLine(bits) {
+      const line = document.getElementById('subnetLine');
+      const left = bits * 1.2 + Math.floor((bits - 1) / 8) * 0.5;
+      line.style.left = `${left}em`;
+    }
+
+    function showError(msg) {
+      const div = document.getElementById('errorMessage');
+      div.textContent = msg;
+      div.classList.remove('hidden');
+      document.getElementById('results').classList.add('hidden');
+    }
+
+    const hideError = () => document.getElementById('errorMessage').classList.add('hidden');
+  </script>
+</body>
+</html>
+
