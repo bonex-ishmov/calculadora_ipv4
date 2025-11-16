@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV - Dylan Andres Guerrero Caicedo</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Gruvbox Material Dark Theme (Custom Props) -->
+  <style>
+    :root {
+      --bg: #1d2021;
+      --bg-alt: #282828;
+      --bg-soft: #3c3836;
+      --bg-soft2: #504945;
+
+      --fg: #ebdbb2;
+      --fg-soft: #d5c4a1;
+
+      --yellow: #fabd2f;
+      --orange: #fe8019;
+      --green: #b8bb26;
+      --blue: #83a598;
+      --purple: #d3869b;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, sans-serif;
+    }
+
+    .section-title {
+      @apply uppercase tracking-wide font-semibold pb-2 mb-4 border-b-2 text-lg;
+      color: var(--yellow);
+      border-color: var(--orange);
+    }
+
+    .card-base {
+      background: var(--bg-soft);
+      border-left: 4px solid var(--purple);
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+    }
+
+    .tag {
+      background: var(--bg-soft2);
+      border-left: 4px solid var(--green);
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-text {
+      background: var(--bg-soft);
+      border-left: 4px solid var(--blue);
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      color: var(--fg-soft);
+      text-align: justify;
+    }
+  </style>
+
+  <script src="/_sdk/element_sdk.js"></script>
+</head>
+
+<body>
+  <div class="max-w-5xl mx-auto p-6">
+    <div class="grid md:grid-cols-3 gap-8 bg-[var(--bg-alt)] p-8 rounded-xl shadow-xl">
+
+      <aside class="bg-[var(--bg-soft)] p-6 rounded-lg space-y-8">
+        <div class="text-center border-b-2 border-[var(--bg-soft2)] pb-6">
+          <h1 id="full-name" class="text-2xl font-bold text-[var(--yellow)]">
+            DYLAN ANDRES GUERRERO CAICEDO
+          </h1>
+          <p id="job-title" class="text-sm tracking-widest text-[var(--blue)] mt-2">
+            DESARROLLADOR DE SOFTWARE
+          </p>
+        </div>
+
+        <!-- Contacto -->
+        <div class="space-y-3">
+          <div class="flex items-center p-2 bg-[var(--bg-soft2)] rounded-md">
+            <span class="text-[var(--orange)] mr-3"></span>
+            <span id="phone" class="text-sm break-all">3155860637</span>
+          </div>
+
+          <div class="flex items-center p-2 bg-[var(--bg-soft2)] rounded-md">
+            <span class="text-[var(--orange)] mr-3"></span>
+            <span id="email" class="text-sm break-all">Bonex_ishmov@protonmail.com</span>
+          </div>
+
+          <div class="flex items-center p-2 bg-[var(--bg-soft2)] rounded-md">
+            <span class="text-[var(--orange)] mr-3"></span>
+            <span id="location" class="text-sm">Bogotá, Cundinamarca</span>
+          </div>
+
+          <div class="flex items-center p-2 bg-[var(--bg-soft2)] rounded-md">
+            <span class="text-[var(--orange)] mr-3"></span>
+            <span id="linkedin" class="text-sm break-all">
+              linkedin.com/in/dylan-guerrero-b685b9270
+            </span>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="section-title">Aptitudes</h3>
+          <div class="tag">Desarrollo de Software Backend</div>
+          <div class="tag">Análisis de Datos y Visualización</div>
+          <div class="tag">Análisis de Negocio</div>
+          <div class="tag">Resolución de Problemas</div>
+          <div class="tag">Optimización de Procesos</div>
+        </div>
+
+        <div>
+          <h3 class="section-title">Idiomas</h3>
+          <div class="tag">Inglés B2</div>
+        </div>
+        <a href="index.html"
+            class="inline-block bg-[var(--orange)] text-[var(--bg)] font-semibold py-2 px-5 rounded-lg hover:bg-[#d76f12] transition duration-200">
+            Volver
+        </a>
+      </aside>
+
+      <main class="md:col-span-2 space-y-10">
+
+        <section>
+          <h2 class="section-title">Perfil Profesional</h2>
+          <p class="profile-text">
+            Desarrollador Backend con experiencia en frameworks como Spring Boot,
+            Laravel y Phoenix. Sólido manejo de bases de datos relacionales
+            (MySQL) y experiencia en la administración de sistemas operativos 
+            Unix/Linux. Trayectoria en análisis de datos con Power BI y 
+            generación de reportes estratégicos para la toma de decisiones.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="section-title">Experiencia Laboral</h2>
+
+          <div class="card-base">
+            <div class="flex flex-wrap justify-between">
+              <div>
+                <h3 class="text-[var(--yellow)] font-semibold text-lg">
+                  Desarrollador de Software
+                </h3>
+                <p class="text-[var(--blue)] text-sm">
+                  Kubaru SAS | Remoto
+                </p>
+              </div>
+              <span class="text-[var(--orange)] text-sm whitespace-nowrap">
+                Feb. 2023 – Ene. 2025
+              </span>
+            </div>
+
+            <ul class="mt-3 space-y-2 text-[var(--fg-soft)]">
+              <li class="pl-4 relative before:content-['▸'] before:absolute before:left-0 before:text-[var(--green)]">
+                Desarrollo y mantenimiento del aplicativo principal usando Laravel.
+              </li>
+              <li class="pl-4 relative before:content-['▸'] before:absolute before:left-0 before:text-[var(--green)]">
+                Diseño e implementación del modelo de datos en MySQL.
+              </li>
+              <li class="pl-4 relative before:content-['▸'] before:absolute before:left-0 before:text-[var(--green)]">
+                Análisis de requerimientos de negocio y propuestas de mejora.
+              </li>
+            </ul>
+          </div>
+
+          <div class="card-base">
+            <div class="flex flex-wrap justify-between">
+              <div>
+                <h3 class="text-[var(--yellow)] font-semibold text-lg">
+                  Analista de Datos
+                </h3>
+                <p class="text-[var(--blue)] text-sm">
+                  Orange Coffee | Híbrido
+                </p>
+              </div>
+              <span class="text-[var(--orange)] text-sm whitespace-nowrap">
+                Ene. 2022 – Nov. 2022
+              </span>
+            </div>
+
+            <ul class="mt-3 space-y-2 text-[var(--fg-soft)]">
+              <li class="pl-4 relative before:content-['▸'] before:absolute before:left-0 before:text-[var(--green)]">
+                Análisis de grandes volúmenes de datos en Power BI.
+              </li>
+              <li class="pl-4 relative before:content-['▸'] before:absolute before:left-0 before:text-[var(--green)]">
+                Reportes de desempeño y métricas para la dirección.
+              </li>
+              <li class="pl-4 relative before:content-['▸'] before:absolute before:left-0 before:text-[var(--green)]">
+                Interpretación de datos complejos para decisiones estratégicas.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="section-title">Educación</h2>
+          <div class="card-base border-l-[4px] border-[var(--purple)]">
+            <h3 class="text-[var(--yellow)] font-semibold text-lg">
+              Ingeniería de Sistemas
+            </h3>
+            <p class="text-[var(--blue)]">Universidad El Bosque</p>
+            <p class="text-[var(--orange)] text-sm mt-1">2023 - En proceso</p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="section-title">Proyectos</h2>
+
+          <div class="card-base">
+            <h3 class="text-[var(--yellow)] font-semibold">
+              Grupo de Electrónica | Universidad El Bosque
+            </h3>
+            <p class="text-[var(--fg-soft)] text-sm">
+              Proyectos de robótica y electrónica avanzada.
+            </p>
+          </div>
+
+          <div class="card-base">
+            <h3 class="text-[var(--yellow)] font-semibold">
+              Runibot 2025 — Ganador Categoría Robots de Batalla (3 lb)
+            </h3>
+            <p class="text-[var(--fg-soft)] text-sm">
+              Reconocimiento por diseño y programación de robots de combate.
+            </p>
+          </div>
+
+          <div class="card-base">
+            <h3 class="text-[var(--yellow)] font-semibold">
+              Grupo de Investigación SIA | Universidad El Bosque
+            </h3>
+            <p class="text-[var(--fg-soft)] text-sm">
+              Investigación en sistemas automatizados y tecnologías emergentes.
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const defaultConfig = {
+      full_name: "DYLAN ANDRES GUERRERO CAICEDO",
+      job_title: "DESARROLLADOR DE SOFTWARE",
+      phone: "3155860637",
+      email: "Bonex_ishmov@protonmail.com",
+      location: "Bogotá, Cundinamarca",
+      linkedin: "linkedin.com/in/dylan-guerrero-b685b9270",
+    };
+
+    async function onConfigChange(config) {
+      for (const key in defaultConfig) {
+        document.getElementById(key.replace("_", "-")).textContent =
+          config[key] || defaultConfig[key];
+      }
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+      });
+    }
+  </script>
+</body>
+</html>

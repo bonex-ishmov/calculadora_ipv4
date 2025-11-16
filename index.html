@@ -5,104 +5,156 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calculadora IPv4</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
-    body { box-sizing: border-box; }
+    :root {
+      --bg: #1d2021;
+      --bg1: #282828;
+      --bg2: #3c3836;
+      --bg3: #504945;
+      --fg: #ebdbb2;
+      --fg2: #d5c4a1;
+      --yellow: #fabd2f;
+      --green: #b8bb26;
+      --blue: #83a598;
+      --orange: #fe8019;
+      --purple: #d3869b;
+      --red: #cc241d;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: "Inter", sans-serif;
+    }
   </style>
 </head>
 
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen py-8">
-  <div class="container mx-auto px-4 max-w-4xl">
-    <div class="bg-white rounded-xl shadow-2xl p-8">
-      <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">🌐 Calculadora IPv4</h1>
+<body class="py-10">
+
+  <div class="max-w-4xl mx-auto px-4">
+
+    <div class="bg-[var(--bg1)] rounded-xl shadow-lg border border-[var(--bg3)] p-8">
+
+      <h1 class="text-3xl font-bold text-center mb-8 text-[var(--yellow)]">
+        Calculadora IPv4
+      </h1>
+
+      <a href="skills.html"
+        class="block text-center w-full bg-[var(--yellow)] text-[var(--bg)] font-semibold py-3 px-6 rounded-lg mb-8 hover:bg-[#e0b027] transition duration-200">
+            Ver mi CV
+      </a>
 
       <form id="ipForm" class="space-y-6">
+
         <div class="grid md:grid-cols-2 gap-6">
+
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Dirección IP (formato: X.X.X.X)</label>
+            <label class="block text-sm font-medium text-[var(--fg2)] mb-2">
+              Dirección IP (X.X.X.X)
+            </label>
             <input type="text" id="ipAddress" placeholder="192.168.1.100"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full px-4 py-3 rounded-lg bg-[var(--bg2)] text-[var(--fg)] border border-[var(--bg3)] focus:outline-none focus:ring-2 focus:ring-[var(--blue)]"
               required>
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Máscara de Subred (formato: X.X.X.X)</label>
+            <label class="block text-sm font-medium text-[var(--fg2)] mb-2">
+              Máscara de Subred (X.X.X.X)
+            </label>
             <input type="text" id="subnetMask" placeholder="255.255.255.0"
-              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full px-4 py-3 rounded-lg bg-[var(--bg2)] text-[var(--fg)] border border-[var(--bg3)] focus:outline-none focus:ring-2 focus:ring-[var(--blue)]"
               required>
           </div>
+
         </div>
 
         <button type="submit"
-          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 transform hover:scale-105">
+          class="w-full bg-[var(--green)] hover:bg-green-600 text-[var(--bg)] font-semibold py-3 px-6 rounded-lg transition duration-200">
           Calcular IPv4
         </button>
       </form>
 
-      <div id="errorMessage" class="hidden mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg"></div>
+      <div id="errorMessage"
+           class="hidden mt-4 p-4 bg-[var(--red)]/20 border border-[var(--red)] text-[var(--red)] rounded-lg">
+      </div>
 
-      <div id="results" class="hidden mt-8 space-y-6">
-        <h2 class="text-2xl font-bold text-gray-800 border-b-2 border-blue-500 pb-2">📊 Resultados del Cálculo</h2>
+      <div id="results" class="hidden mt-10 space-y-8">
+
+        <h2 class="text-2xl font-bold text-[var(--yellow)] border-b border-[var(--yellow)] pb-2">
+          Resultados del Cálculo
+        </h2>
 
         <div class="grid md:grid-cols-2 gap-6">
-          <div class="bg-blue-50 p-4 rounded-lg">
-            <h3 class="font-semibold text-blue-800 mb-2">🏠 IP de Red</h3>
+
+          <div class="bg-[var(--bg2)] p-4 rounded-lg border-l-4 border-[var(--blue)]">
+            <h3 class="font-semibold text-[var(--blue)] mb-2"> IP de Red</h3>
             <p id="networkIP" class="text-lg font-mono"></p>
           </div>
 
-          <div class="bg-green-50 p-4 rounded-lg">
-            <h3 class="font-semibold text-green-800 mb-2">📡 IP de Broadcast</h3>
+          <div class="bg-[var(--bg2)] p-4 rounded-lg border-l-4 border-[var(--green)]">
+            <h3 class="font-semibold text-[var(--green)] mb-2"> IP de Broadcast</h3>
             <p id="broadcastIP" class="text-lg font-mono"></p>
           </div>
 
-          <div class="bg-purple-50 p-4 rounded-lg">
-            <h3 class="font-semibold text-purple-800 mb-2">💻 Hosts Útiles</h3>
+          <div class="bg-[var(--bg2)] p-4 rounded-lg border-l-4 border-[var(--purple)]">
+            <h3 class="font-semibold text-[var(--purple)] mb-2"> Hosts Útiles</h3>
             <p id="usableHosts" class="text-lg font-mono"></p>
           </div>
 
-          <div class="bg-yellow-50 p-4 rounded-lg">
-            <h3 class="font-semibold text-yellow-800 mb-2">📍 Clase de IP</h3>
+          <div class="bg-[var(--bg2)] p-4 rounded-lg border-l-4 border-[var(--yellow)]">
+            <h3 class="font-semibold text-[var(--yellow)] mb-2"> Clase de IP</h3>
             <p id="ipClass" class="text-lg font-mono"></p>
           </div>
+
         </div>
 
-        <div class="bg-gray-50 p-4 rounded-lg">
-          <h3 class="font-semibold text-gray-800 mb-2">🔗 Rango de IPs Útiles</h3>
+        <div class="bg-[var(--bg2)] p-4 rounded-lg border-l-4 border-[var(--orange)]">
+          <h3 class="font-semibold text-[var(--orange)] mb-2"> Rango de IPs Útiles</h3>
           <p id="usableRange" class="text-lg font-mono"></p>
         </div>
 
-        <div class="bg-indigo-50 p-4 rounded-lg">
-          <h3 class="font-semibold text-indigo-800 mb-2">🌍 Tipo de IP</h3>
+        <div class="bg-[var(--bg2)] p-4 rounded-lg border-l-4 border-[var(--green)]">
+          <h3 class="font-semibold text-[var(--green)] mb-2"> Tipo de IP</h3>
           <p id="ipType" class="text-lg"></p>
         </div>
 
-        <div class="bg-orange-50 p-4 rounded-lg">
-          <h3 class="font-semibold text-orange-800 mb-2">🔢 Representación Binaria</h3>
-          <div class="bg-white p-4 rounded border">
-            <div class="text-xs text-gray-600 mb-2">IP Address en binario:</div>
+        <div class="bg-[var(--bg2)] p-4 rounded-lg border-l-4 border-[var(--purple)]">
+
+          <h3 class="font-semibold text-[var(--purple)] mb-2"> Representación Binaria</h3>
+
+          <div class="bg-[var(--bg1)] p-4 rounded border border-[var(--bg3)]">
+            <div class="text-xs text-[var(--fg2)] mb-2">IP Address en binario:</div>
+
             <div class="relative">
               <div id="binaryRepresentation" class="font-mono text-lg leading-relaxed"></div>
-              <div id="subnetLine" class="absolute top-0 h-full border-l-2 border-blue-500"></div>
+              <div id="subnetLine" class="absolute top-0 h-full border-l-2 border-[var(--blue)]"></div>
             </div>
-            <div class="flex items-center gap-4 mt-3 text-xs">
+
+            <div class="flex items-center gap-4 mt-3 text-xs text-[var(--fg2)]">
               <div class="flex items-center gap-1">
-                <div class="w-3 h-3 bg-red-500 rounded"></div>
+                <div class="w-3 h-3 bg-[var(--red)] rounded"></div>
                 <span>Porción de Red</span>
               </div>
+
               <div class="flex items-center gap-1">
-                <div class="w-3 h-3 bg-green-500 rounded"></div>
+                <div class="w-3 h-3 bg-[var(--green)] rounded"></div>
                 <span>Porción de Host</span>
               </div>
+
               <div class="flex items-center gap-1">
-                <div class="w-3 h-0.5 bg-blue-500"></div>
+                <div class="w-3 h-0.5 bg-[var(--blue)]"></div>
                 <span>Límite de Subred</span>
               </div>
             </div>
+
           </div>
         </div>
+
       </div>
+
     </div>
   </div>
-
   <script>
     document.getElementById('ipForm').addEventListener('submit', e => {
       e.preventDefault();
@@ -194,4 +246,3 @@
   </script>
 </body>
 </html>
-
